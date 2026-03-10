@@ -1,0 +1,7 @@
+README.md
+setup.py
+stats_module.c
+stats_c.egg-info/PKG-INFO
+stats_c.egg-info/SOURCES.txt
+stats_c.egg-info/dependency_links.txt
+stats_c.egg-info/top_level.txt

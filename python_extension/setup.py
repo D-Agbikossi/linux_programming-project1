@@ -1,4 +1,4 @@
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 
 module = Extension('stats_c', sources=['stats_module.c'])
 
