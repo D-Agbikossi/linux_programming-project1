@@ -1,27 +1,16 @@
 ## Linux Programming – Project 1
 
-This repository contains four small, practical projects for a Linux programming course.  
-Each project focuses on a different low-level concept: ELF binaries, system calls, Python C extensions, and Unix signals.
-
-The work is intended to be completed and understood **individually**.  
-This README gives a high-level overview; each subdirectory has its own detailed `README.md` with exact commands and instructions.
+This repository contains four small, practical projects for Linux programming.  
+Each project focuses on a different concept: ELF binaries, system calls, Python C extensions, and Unix signals.
 
 - `binary_analysis/` – Project 1: Investigating a Suspicious Binary (ELF analysis).
 - `syscall_monitor/` – Project 2: System Call Monitoring Tool (`strace`).
 - `python_extension/` – Project 3: Python Performance C Extension.
 - `signal_service/` – Project 4: Signal-Based Server Controller.
 
-All commands below assume a Linux environment (or WSL on Windows) with:
-
-- A C compiler (e.g. `gcc`).
-- Standard development tools (`make`, `strace`, `objdump`, `nm`).
-- Python 3 with a working C toolchain for building extensions.
-
----
-
 ## Project 1 – Investigating a Suspicious Binary
 
-**Goal:** Analyse an unknown ELF executable (`data_sync`) **without executing it**, and infer its likely behavior.
+**Goal:** Analyse an unknown ELF executable (`data_sync`) without executing it, and infer its likely behavior.
 
 - Source and analysis live in `binary_analysis/`.
 - Main file: `data_sync.c` (simulated file synchronization tool).

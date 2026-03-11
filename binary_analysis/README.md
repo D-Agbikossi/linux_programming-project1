@@ -2,7 +2,7 @@
 
 ### Overview
 
-This project simulates a suspicious binary called `data_sync` and analyses it **without executing it** using standard ELF inspection tools.
+This project simulates a suspicious binary called `data_sync` and analyses it without executing it using standard ELF inspection tools.
 
 The C program (`data_sync.c`) behaves like a simple directory/file synchronization tool:
 
