@@ -1,148 +1,38 @@
 ## Linux Programming – Project 1
 
-This repository contains four small, practical projects for Linux programming.  
-Each project focuses on a different concept: ELF binaries, system calls, Python C extensions, and Unix signals.
+This repo contains four small Linux programming examples. Each folder is self‑contained.
 
-- `binary_analysis/` – Project 1: Investigating a Suspicious Binary (ELF analysis).
-- `syscall_monitor/` – Project 2: System Call Monitoring Tool (`strace`).
-- `python_extension/` – Project 3: Python Performance C Extension.
-- `signal_service/` – Project 4: Signal-Based Server Controller.
+- `binary_analysis/` – ELF analysis of a simulated `data_sync` binary.
+- `syscall_monitor/` – System call tracing of a file backup tool.
+- `python_extension/` – Python stats C extension + benchmark.
+- `signal_service/` – Signal‑driven monitoring service.
 
-## Project 1 – Investigating a Suspicious Binary
+### Requirements
 
-**Goal:** Analyse an unknown ELF executable (`data_sync`) without executing it, and infer its likely behavior.
+- Linux or WSL with `gcc`, `make`, and standard build tools.
+- Python 3 (for `python_extension/`).
 
-- Source and analysis live in `binary_analysis/`.
-- Main file: `data_sync.c` (simulated file synchronization tool).
+### Quick start
 
-Typical workflow (see `binary_analysis/README.md` for full details):
+- **Project 1 – ELF analysis**
+  - `cd binary_analysis`
+  - `gcc -Wall -Wextra -O2 -o data_sync data_sync.c`
+  - Use tools like `objdump`, `nm`, and `strings` on `./data_sync` as needed.
 
-```bash
-cd binary_analysis
-gcc -Wall -Wextra -O2 -o data_sync data_sync.c
-objdump -f -h -d ./data_sync > data_sync_objdump.txt
-nm ./data_sync > data_sync_nm.txt
-nm -D ./data_sync > data_sync_nm_dynamic.txt
-```
+- **Project 2 – System call monitor**
+  - `cd syscall_monitor`
+  - `gcc -Wall -Wextra -O2 -o file_backup file_backup.c`
+  - `strace -o file_backup_strace.txt ./file_backup`
 
-Use these outputs to:
+- **Project 3 – Python C extension**
+  - `cd python_extension`
+  - `python3 -m pip install . --user`  *(or `python3 setup.py build && python3 setup.py install --user`)*
+  - `python3 benchmark.py`
 
-- Identify the **entry point**.
-- List **imported library functions**.
-- Describe important **ELF sections**.
-- Write a short forensic report explaining what `data_sync` likely does.
+- **Project 4 – Signal service**
+  - `cd signal_service`
+  - `gcc -Wall -Wextra -O2 -o monitor_service monitor_service.c`
+  - In one terminal: `./monitor_service`
+  - In another: send signals with `kill -SIGUSR1 <pid>`, `kill -SIGINT <pid>`, `kill -SIGTERM <pid>`
 
----
-
-## Project 2 – System Call Monitoring Tool
-
-**Goal:** Observe how a small file backup program interacts with the kernel using `strace`.
-
-- Files live in `syscall_monitor/`.
-- Main file: `file_backup.c`.
-
-Typical workflow:
-
-```bash
-cd syscall_monitor
-gcc -Wall -Wextra -O2 -o file_backup file_backup.c
-strace -o file_backup_strace.txt ./file_backup
-```
-
-From `file_backup_strace.txt`, identify and summarise:
-
-- **File-related system calls** (e.g. `open`, `read`, `write`, `close`).
-- **Process-related system calls** (e.g. `execve`, `exit_group`).
-
-The project deliverables include:
-
-- The C source.
-- The `strace` output file.
-- A short explanation and a system-call summary table.
-
-Full details and a suggested table format are in `syscall_monitor/README.md`.
-
----
-
-## Project 3 – Python Performance C Extension
-
-**Goal:** Speed up heavy numeric computation in Python by moving core loops into a C extension.
-
-- Files live in `python_extension/`.
-- Key files:
-  - `stats_pure.py` – pure Python statistics (mean, variance, std dev).
-  - `stats_module.c` – CPython C extension implementing the same logic.
-  - `setup.py` – build script.
-  - `benchmark.py` – performance comparison harness.
-
-Typical workflow:
-
-```bash
-cd python_extension
-python3 setup.py build
-python3 setup.py install --user
-python3 benchmark.py
-```
-
-The benchmark:
-
-- Computes statistics on large randomly generated datasets.
-- Prints a table comparing:
-  - Pure Python runtime.
-  - C extension runtime.
-  - Speedup and percentage improvement.
-
-Deliverables:
-
-- Python program and C extension source.
-- Benchmark results.
-- A brief performance explanation using your measured numbers.
-
-See `python_extension/README.md` for more guidance.
-
----
-
-## Project 4 – Signal-Based Server Controller
-
-**Goal:** Implement a simple monitoring service that runs continuously and responds to Unix signals.
-
-- Files live in `signal_service/`.
-- Main file: `monitor_service.c`.
-
-The service:
-
-- Prints a status message every 5 seconds.
-- Handles the following signals:
-  - `SIGINT` – graceful shutdown (`"Monitor Service shutting down safely."`).
-  - `SIGUSR1` – status request (`"System status requested by administrator."`).
-  - `SIGTERM` – emergency shutdown (`"Emergency shutdown signal received."`).
-
-Typical workflow:
-
-```bash
-cd signal_service
-gcc -Wall -Wextra -O2 -o monitor_service monitor_service.c
-./monitor_service            # terminal 1: run service
-kill -SIGUSR1 <pid>          # terminal 2: request status
-kill -SIGINT <pid>           # or use Ctrl+C for graceful shutdown
-kill -SIGTERM <pid>          # emergency shutdown
-```
-
-Deliverables:
-
-- `monitor_service.c` and compilation command.
-- Terminal logs or screenshots showing each signal being handled.
-- A short explanation of how signal handlers are registered and what each signal does.
-
-Full details are in `signal_service/README.md`.
-
----
-
-## Notes
-
-- This repository is intended for **learning and assessment**. Make sure you understand every part of the code and analysis before submitting.
-- Keep the repository public as required by the assignment instructions.
-- For grading, ensure:
-  - All source files compile on a standard Linux toolchain.
-  - Generated analysis outputs (`objdump`, `nm`, `strace`, benchmark results) are included where requested.
-  - Your written reports follow the structures suggested in each project’s README.
+For more detail on any project, see the README inside its folder.
